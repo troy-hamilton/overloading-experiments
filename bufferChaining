@@ -1,0 +1,49 @@
+#include <cstring>
+#include <iostream>
+using namespace std;
+
+class test
+{
+    private:
+        char cbuf[100] = "";
+    
+    public:
+    
+        /*  BUFFER CHAINING
+            how it works.
+            example:
+                class test t << "abc" << "def" << "ghi";
+            That statement will append the c strings to the character buffer
+            contained within t.
+            
+            It works by starting right to left.
+            phase 1.    the string "abc" will be appended to the buffer within t,
+                        then a reference to t will be returned.
+            
+            phase 2.    the returned reference will be used to repeat step one,
+                        but it will use "def", and append it to the buffer within t.
+            ...
+        */
+        test & operator << (const char * str)
+        {
+            strcat(cbuf, str);
+            return *this;
+        }
+        
+        // this simply copies the buffer within to ref
+        void operator >> (char * ref)
+        {
+            strcpy(ref, cbuf);
+        }
+};
+
+int main()
+{
+    test t;
+    t << "abc" << "def" << "ghi";
+    
+    char p[100];
+    t >> p;
+    
+    cout << p << endl;
+}

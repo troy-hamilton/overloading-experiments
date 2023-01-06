@@ -16,7 +16,7 @@ void turn_negative(N &var)
 
 int main()
 {
-    unsigned int var = 9;
+    unsigned var = 9; //compiler error: template<typename N>  requires  signed_integral<N> {aka 'std::signed_integral<N>'}
     
     turn_negative(var);
     

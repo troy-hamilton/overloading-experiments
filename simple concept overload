@@ -1,0 +1,25 @@
+#include <concepts>
+#include <iostream>
+
+//defines a concept where a type 'H' must be a signed integral
+template <typename H>
+concept signed_number = std::signed_integral<H>;
+
+
+template <typename N> //indicates there needs to be a type 'N'
+requires signed_number<N> //indicates that 'N' needs to follow the rules of 'signed_number'
+void turn_negative(N &var)
+{
+    var = -var;
+    
+}
+
+int main()
+{
+    unsigned int var = 9;
+    
+    turn_negative(var);
+    
+    std::cout << var << std::endl;
+    
+}

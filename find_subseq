@@ -1,0 +1,34 @@
+#include <cstddef>
+#include <cstring>
+#include <iostream>
+
+int find_subseq(std::byte *outer, std::byte *inner, int outersize, int innersize)
+{
+	using std::byte;
+	
+	for(int i = 0; i < outersize - innersize + 1; i++)
+	{
+		if(outer[i] == inner[0])
+		{
+			for(int j = 0; j < innersize; j++)
+			{
+				if(outer[i + j] != inner[j])
+					break;
+				if(j == innersize - 1)
+					return i;
+			}
+		}
+	}
+	
+	return -1;
+}
+
+int main()
+{
+	using std::byte;
+	const char *outer = "0123456789ABCDEF";
+	const char *inner = "F";
+	
+	int offset = find_subseq((byte*) outer, (byte*)inner, strlen(outer), strlen(inner));
+	std::cout << offset;
+}
